@@ -1,73 +1,63 @@
-public class Commodities
-{
-    private String commodity[][]={
-            {"Rice","Wheat","Other"},
-            {"Table","Sofa","Chair"},
-            {"Mobile","TV","Tablets"},
-            {"Beauty products","Creams","Perfumes"}
-    };
-    private String user_option;
-    private int quantity;
-    private float GST;
-    private float price, total_price;
+import java.util.HashMap;
 
-    Commodities(String user_option,int quantity,float price)
-    {
-        this.user_option=user_option;
-        this.quantity=quantity;
-        this.GST=calc_GST(this.user_option);
-        this.price=price;
-        this.total_price = calc_price(this.price,this.GST);
+public class Commodities {
+    private static final HashMap<String, Float> commodityGSTMap = (HashMap<String, Float>) new HashMap<String, Float>();
+
+    static {
+
+        commodityGSTMap.put("Rice", (float) 0.0);
+        commodityGSTMap.put("Wheat", (float) 0.0);
+
+        commodityGSTMap.put("Table", (float)5.0);
+        commodityGSTMap.put("Sofa", (float)5.0);
+        commodityGSTMap.put("Chair", (float)5.0);
+
+        commodityGSTMap.put("Mobile", (float)18.0);
+        commodityGSTMap.put("TV", (float)18.0);
+        commodityGSTMap.put("Tablet", (float)18.0);
+
+        commodityGSTMap.put("Beauty Product", (float)28.0);
+        commodityGSTMap.put("Cream", (float)28.0);
+        commodityGSTMap.put("Perfume", (float)28.0);
+
+
     }
 
-    float calc_GST(String user_option) {
+    private String commoditySelectedByUser;
+    private int quantityOfSelectedCommodity;
+    private float priceOfSelectedCommodity, GSTOfSelectedCommodity, finalPriceOfSelectedCommodity;
 
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                if ((commodity[i][j].toLowerCase()).equals(user_option.toLowerCase()))
-                {
+    Commodities(String commoditySelectedByUser,int quantityOfCommoditySelected,float priceOfSelectedCommodity)
+    {
 
-                    return (GST(i));
-                }
-
-
-            }
+        if(!commodityGSTMap.containsKey(commoditySelectedByUser)) {
+            System.out.println("Commodity does not exist in the inventory");
+            return;
         }
 
-        return 10000;
+        this.commoditySelectedByUser=commoditySelectedByUser;
+        this.quantityOfSelectedCommodity=quantityOfCommoditySelected;
+        this.priceOfSelectedCommodity = priceOfSelectedCommodity;
+        this.GSTOfSelectedCommodity = calculateGSTOfSelectedCommodity(this.commoditySelectedByUser);
+        this.finalPriceOfSelectedCommodity= calculateFinalPriceOfSelectedCommodity();
+        Display();
     }
 
-    int GST(int index)
+    float calculateGSTOfSelectedCommodity(String commodityName)
     {
-        if(index==0)
-            return 0;
-        else if(index==1)
-            return 5;
-        else if(index==2)
-            return 18;
-        else if(index==3)
-            return 28;
-        else
-            return 10000;
+        return (this.commodityGSTMap.get(commodityName));
     }
 
-    float calc_price(float price,float GST)
+    float calculateFinalPriceOfSelectedCommodity()
     {
-        return(price*(GST/100 + 1));
+     return ((this.GSTOfSelectedCommodity+1)*(this.priceOfSelectedCommodity));
     }
 
-   void Display()
+    void Display()
     {
-        if(GST==10000) {
 
-            System.out.println("Commodity " +this.user_option+" does not exist int the inventory");
-
-        return;}
-
-        System.out.println("GST applicable per unit "+this.GST+"%");
-        System.out.println("Final Price Rs "+this.total_price);
+        System.out.println("GST of unit : "+this.GSTOfSelectedCommodity);
+        System.out.println("Final price: "+this.finalPriceOfSelectedCommodity);
     }
 
 }
