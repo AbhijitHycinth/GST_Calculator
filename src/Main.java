@@ -20,9 +20,5 @@ public class Main
                     quantityOfCommoditySelectedByUser,
                     priceOfCommoditySelected
                      );
-
-            commodity.Display();
-
-
     }
 }

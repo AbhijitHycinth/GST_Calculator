@@ -36,10 +36,11 @@ public class Commodity {
         }
 
         this.nameOfCommodity =name;
-        this.quantity =quantity;
+        this.quantity = quantity;
         this.price = price;
         this.GST = calculateGST(this.nameOfCommodity);
         this.finalPrice = calculateFinalPrice();
+        Display();
     }
 
     float calculateGST(String commodityName)
