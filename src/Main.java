@@ -4,23 +4,24 @@ public class Main
 {
     public static void main(String args[])
     {
-            Scanner sc=new Scanner(System.in);
+            Scanner scanInput=new Scanner(System.in);
 
             System.out.println("Enter the Commodity: ");
-            String commodityRequestedByUser=sc.next();
+            String commodityRequestedByUser=scanInput.next();
 
             System.out.println("Enter the Quantity: ");
-            int quantityOfCommoditySelectedByUser=sc.nextInt();
+            int quantityOfCommoditySelectedByUser=scanInput.nextInt();
 
             System.out.println("Enter the unit price of the commodity: ");
-            float priceOfCommoditySelected=sc.nextFloat();
+            float priceOfCommoditySelected=scanInput.nextFloat();
 
-        Commodities obj = new Commodities(
+            Commodity commodity = new Commodity(
                     commodityRequestedByUser,
                     quantityOfCommoditySelectedByUser,
                     priceOfCommoditySelected
                      );
 
+            commodity.Display();
 
 
     }
